@@ -1,5 +1,6 @@
 package com.ossovita.crypto.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RowHolder> {
 
     private ArrayList<CryptoModel> cryptoList;
-    private String[] colors = {"#a3ff00","#ff00aa","#b4a7d6","#a4c2f4","8ee5ee","#",""};
+    private String[] colors = {"#a3ff00","#ff00aa","#b4a7d6","#a4c2f4","#8ee5ee","#f5f5f5","#f47932"};
 
     public RecyclerViewAdapter(ArrayList<CryptoModel> cryptoList) {
         this.cryptoList = cryptoList;
@@ -53,6 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         public void bind(CryptoModel model,String[] colors,Integer position){
+            itemView.setBackgroundColor(Color.parseColor(colors[position%8]));
             textName = itemView.findViewById(R.id.text_name);
             textPrice = itemView.findViewById(R.id.text_price);
             textName.setText(model.currency);

@@ -1,12 +1,14 @@
 package com.ossovita.crypto.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ossovita.crypto.adapter.RecyclerViewAdapter;
 import com.ossovita.crypto.model.CryptoModel;
 import com.ossovita.crypto.R;
 import com.ossovita.crypto.service.CryptoAPI;
@@ -26,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private String BASE_URL="https://api.nomics.com/v1/";
     Retrofit retrofit;
     RecyclerView recyclerView;
+    RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
+
         //https://api.nomics.com/v1/prices?key=a5554d73a36b2309d79d774d4247f302
 
         //Retrofit&JSON
@@ -58,10 +62,15 @@ public class MainActivity extends AppCompatActivity {
                     List<CryptoModel> responseList = response.body();
                     cryptoModels = new ArrayList<>(responseList);
 
-                    for(CryptoModel cryptoModel : cryptoModels){
+                    //RecyclerView
+                    recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    adapter = new RecyclerViewAdapter(cryptoModels);
+                    recyclerView.setAdapter(adapter);
+
+                    /*for(CryptoModel cryptoModel : cryptoModels){
                         System.out.println(cryptoModel.currency);
                         System.out.println(cryptoModel.price);
-                    }
+                    }*/
                 }
             }
 
